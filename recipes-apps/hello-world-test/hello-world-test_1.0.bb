@@ -4,15 +4,17 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 DEPENDS = "googletest"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/../hello-world/files:"
+SRC_URI = "git://git@github.com/johannesneitzel/hello-world.git;branch=master;protocol=ssh \
+           file://test-add.cpp"
 
-SRC_URI = "file://test-add.cpp \
-           file://hello-world.c"
 
-S = "${WORKDIR}"
+
+SRCREV = "${AUTOREV}"
+
+S = "${WORKDIR}/git"
 
 do_compile() {
-    ${CXX} ${CXXFLAGS} ${LDFLAGS} test-add.cpp -lgtest -lpthread -o hello-world-test
+    ${CXX} ${CXXFLAGS} ${LDFLAGS} ${WORKDIR}/test-add.cpp -lgtest -lpthread -o hello-world-test
 }
 
 do_install() {
